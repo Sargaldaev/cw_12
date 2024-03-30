@@ -10,7 +10,7 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { deleteGallery, fetchData, galleryFullInfo } from '../../../../store/gallery/galleryThunk.ts';
+import { deleteGallery, galleryFullInfo } from '../../../../store/gallery/galleryThunk.ts';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const AdminGalleryFullInfo = () => {
