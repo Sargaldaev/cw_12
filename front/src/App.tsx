@@ -10,6 +10,7 @@ import AdminGalleryFullInfo from './features/Gallery/AdminGallery/AdminGalleryFu
 import { useSelector } from 'react-redux';
 import { RootState } from './app/store.ts';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.tsx';
+import AdminAllGalleries from './features/Gallery/AdminGallery/AdminAllGalleries/AdminAllGalleries.tsx';
 
 function App() {
   const {user} = useSelector((state: RootState) => state.user);
@@ -39,6 +40,7 @@ function App() {
                 )
               }
             />
+
             <Route path={'/'} element={<AllGalleries/>}/>
             <Route path={'/addImage'} element={<AddImage/>}/>
             <Route path={'/register'} element={<Register/>}/>

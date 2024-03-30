@@ -30,14 +30,14 @@ galleriesRouter.get('/', async (req, res) => {
   try {
     const {userId} = req.query;
 
-    if (userId) {
-      const user = await Gallery.findOne({user: userId});
+    const user = await Gallery.findOne({user: userId});
 
-      if (user) {
-        const userGalleries = await Gallery.find({user: userId}).populate('user', 'displayName role');
-        return res.send(userGalleries);
-      }
+
+    if (user) {
+      const userGalleries = await Gallery.find({user: userId}).populate('user', 'displayName role');
+      return res.send(userGalleries);
     }
+
 
     const galleries = await Gallery.find().populate('user', 'username displayName role');
     return res.send(galleries);

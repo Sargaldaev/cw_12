@@ -47,7 +47,8 @@ const AllGalleries = () => {
   return fetchLoad ? (
     <CircularProgress sx={{marginTop: 20, marginLeft: 50}} color="secondary"/>
   ) : (
-    <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 2}}>
+
+    <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 5}}>
 
       {galleries.map(item => (
         <Card sx={{width: 330, height: 380, backgroundColor: '#00796B'}} key={item._id}>

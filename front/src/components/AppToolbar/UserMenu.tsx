@@ -13,7 +13,7 @@ interface Props {
   user: User;
 }
 
-const UserMenu: React.FC<Props> = ({ user }) => {
+const UserMenu: React.FC<Props> = ({user}) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -46,24 +46,17 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         Hello, {user?.displayName}
       </Button>
       <Box>
-        {avatarFix ? (
-          <Card>
-            <CardMedia sx={{ width: 70 }} component="img" image={avatarFix} alt="Image" />
-          </Card>
-        ) : (
-          <Card>
-            <CardMedia sx={{ width: 70 }} component="img" image={avatar} alt="Image" />
-          </Card>
-        )}
+        <Card>
+          <CardMedia sx={{width: 70}} component="img" image={avatarFix || avatar} alt="Image"/>
+        </Card>
       </Box>
       <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
 
         <MenuItem>
-          <Link to="/addImage" style={{ color: 'white', textDecoration: 'none' }}>
+          <Link to="/addImage" style={{color: 'white', textDecoration: 'none'}}>
             Add Image
           </Link>
         </MenuItem>
-
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
 

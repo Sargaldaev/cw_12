@@ -10,7 +10,7 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { deleteGallery, galleryFullInfo } from '../../../../store/gallery/galleryThunk.ts';
+import { deleteGallery, fetchData, galleryFullInfo } from '../../../../store/gallery/galleryThunk.ts';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const AdminGalleryFullInfo = () => {
@@ -24,21 +24,17 @@ const AdminGalleryFullInfo = () => {
       dispatch(galleryFullInfo(id));
     }
 
-    if (!galleryFullInfo.length) {
-      console.log('nav1');
-      navigate('/');
-    }
-
-  }, [dispatch, id]);
+  }, [dispatch, id, navigate]);
 
   const deletePhoto = async (Id: string) => {
+
     await dispatch(deleteGallery(Id));
-    if (!galleryFullInfo.length) {
-      console.log('nav2');
+    await dispatch(galleryFullInfo(id));
+    if (galleryInfo.length === 1) {
       navigate('/');
     }
-    await dispatch(galleryFullInfo(id));
   };
+
   return galleryInfoLoad ? (
     <CircularProgress sx={{marginTop: 20, marginLeft: 50}} color="secondary"/>
   ) : (

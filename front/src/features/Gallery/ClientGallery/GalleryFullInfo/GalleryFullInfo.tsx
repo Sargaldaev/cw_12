@@ -19,25 +19,21 @@ const GalleryFullInfo = () => {
   const {id} = useParams() as { id: string };
   const {user} = useSelector((state: RootState) => state.user);
   const {galleryInfo, galleryInfoLoad, deleteGalleryLoad} = useSelector((state: RootState) => state.gallery);
+
+
   useEffect(() => {
     if (id) {
       dispatch(galleryFullInfo(id));
-    }
-
-    if (!galleryFullInfo.length) {
-      console.log('nav1');
-      navigate('/');
     }
 
   }, [dispatch, id]);
 
   const deletePhoto = async (Id: string) => {
     await dispatch(deleteGallery(Id));
-    if (!galleryFullInfo.length) {
-      console.log('nav2');
+    await dispatch(galleryFullInfo(id));
+    if (galleryInfo.length === 1) {
       navigate('/');
     }
-    await dispatch(galleryFullInfo(id));
   };
   return galleryInfoLoad ? (
     <CircularProgress sx={{marginTop: 20, marginLeft: 50}} color="secondary"/>
@@ -78,16 +74,16 @@ const GalleryFullInfo = () => {
             <CardActions>
               {
                 user?._id === item.user._id &&
-                  (
-                    <Button
-                      onClick={() => deletePhoto(item._id)}
-                      disabled={deleteGalleryLoad === item._id}
-                      size="small"
-                      sx={{position: 'absolute', top: 350, right: 10, color: 'red', fontWeight: 700}}
-                    >
-                      {deleteGalleryLoad === item._id ? <CircularProgress/> : 'Delete'}
-                    </Button>
-                  )
+                (
+                  <Button
+                    onClick={() => deletePhoto(item._id)}
+                    disabled={deleteGalleryLoad === item._id}
+                    size="small"
+                    sx={{position: 'absolute', top: 350, right: 10, color: 'red', fontWeight: 700}}
+                  >
+                    {deleteGalleryLoad === item._id ? <CircularProgress/> : 'Delete'}
+                  </Button>
+                )
               }
             </CardActions>
           </Card>
