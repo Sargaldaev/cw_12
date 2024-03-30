@@ -17,6 +17,8 @@ import { googleLogin, register } from '../../../store/user/userThunk.ts';
 import { GoogleLogin } from '@react-oauth/google';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Register as  registerForm } from '../../../types';
+import FileInput from '../../../components/FileInput/FileInput.tsx';
+
 
 const darkTheme = createTheme({
   palette: {
@@ -33,6 +35,7 @@ const Register = () => {
     username: '',
     password: '',
     displayName: '',
+    avatar:null
   });
 
 
@@ -125,6 +128,15 @@ const Register = () => {
                   value={users.displayName}
                   error={Boolean(getFieldError('displayName'))}
                   helperText={getFieldError('displayName')}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FileInput
+                  name={'avatar'}
+                  image={users.avatar}
+                  onChange={onChange}
+                  error={Boolean(getFieldError('avatar'))}
+                  helperText={getFieldError('avatar')}
                 />
               </Grid>
               <Grid item xs={12}>

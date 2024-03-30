@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { User } from '../../types';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store.ts';
 import { logout } from '../../store/user/userThunk';
+import { apiUrl } from '../../constants.ts';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
 
 interface Props {
   user: User;
@@ -25,11 +28,34 @@ const UserMenu: React.FC<Props> = ({ user }) => {
     dispatch(logout());
   };
 
+
+  let avatar = '';
+  if (user?.avatar) {
+    avatar = user.avatar.includes(`images`)
+      ? apiUrl + user.avatar
+      : user.avatar.toString();
+  }
+  let avatarFix = '';
+  if (user?.avatar) {
+    avatarFix = user.avatar.includes(`fixtures`) ? apiUrl + user.avatar : '';
+  }
+
   return (
     <>
       <Button onClick={handleClick} color="inherit">
         Hello, {user?.displayName}
       </Button>
+      <Box>
+        {avatarFix ? (
+          <Card>
+            <CardMedia sx={{ width: 70 }} component="img" image={avatarFix} alt="Image" />
+          </Card>
+        ) : (
+          <Card>
+            <CardMedia sx={{ width: 70 }} component="img" image={avatar} alt="Image" />
+          </Card>
+        )}
+      </Box>
       <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
 
         <MenuItem>
