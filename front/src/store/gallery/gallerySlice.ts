@@ -1,11 +1,12 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Gallery, ValidationError} from '../../types';
-import {deleteGallery, fetchData, galleryFullInfo} from './galleryThunk.ts';
+import { addImage, deleteGallery, fetchData, galleryFullInfo } from './galleryThunk.ts';
 
 export interface GalleryState {
   galleries: Gallery[];
   galleryInfo: Gallery[];
   modalItem: Gallery | null;
+  createLoad: boolean;
   fetchLoad: boolean;
   createError: ValidationError | null;
   deleteGalleryLoad: string;
@@ -15,6 +16,7 @@ export interface GalleryState {
 const initialState: GalleryState = {
   galleries: [],
   galleryInfo: [],
+  createLoad: false,
   createError: null,
   modalItem: null,
   fetchLoad: false,
@@ -68,6 +70,19 @@ export const GallarySlice = createSlice({
       state.deleteGalleryLoad = '';
     });
 
+
+    builder.addCase(addImage.pending, (state: GalleryState) => {
+      state.createLoad = true;
+      state.createError = null;
+    });
+    builder.addCase(addImage.fulfilled, (state: GalleryState) => {
+      state.createLoad = false;
+      state.createError = null;
+    });
+    builder.addCase(addImage.rejected, (state: GalleryState,action) => {
+      state.createLoad = false;
+      state.createError = action.payload || null;
+    });
   },
 });
 

@@ -8,25 +8,27 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { deleteGallery, galleryFullInfo } from '../../../store/gallery/galleryThunk.ts';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const GalleryFullInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const {id} = useParams() as { id: string };
   const {user} = useSelector((state: RootState) => state.user);
-  const {galleryInfo, galleryInfoLoad,deleteGalleryLoad} = useSelector((state: RootState) => state.gallery);
+  const {galleryInfo, galleryInfoLoad, deleteGalleryLoad} = useSelector((state: RootState) => state.gallery);
   useEffect(() => {
     if (id) {
       dispatch(galleryFullInfo(id));
     }
-  }, [dispatch, id]);
+
+  }, [dispatch, id, navigate]);
 
   const deletePhoto = async (Id: string) => {
     await dispatch(deleteGallery(Id));
-    await dispatch(galleryFullInfo(id));
+    await dispatch(galleryFullInfo(Id));
   };
   return galleryInfoLoad ? (
     <CircularProgress sx={{marginTop: 20, marginLeft: 50}} color="secondary"/>
@@ -50,7 +52,7 @@ const GalleryFullInfo = () => {
       }
       <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 2}}>
         {galleryInfo.map(item => (
-          <Card sx={{width: 375, height: 400,position:'relative'}}
+          <Card sx={{width: 375, height: 400, position: 'relative'}}
                 key={item._id}>
             <CardMedia
               component="img"
@@ -72,18 +74,18 @@ const GalleryFullInfo = () => {
                       onClick={() => deletePhoto(item._id)}
                       disabled={deleteGalleryLoad === item._id}
                       size="small"
-                      sx={{position:'absolute',top:350,right:10,color:'red',fontWeight:700}}
+                      sx={{position: 'absolute', top: 350, right: 10, color: 'red', fontWeight: 700}}
                     >
-                      {deleteGalleryLoad === item._id ? <CircularProgress /> : 'Delete'}
+                      {deleteGalleryLoad === item._id ? <CircularProgress/> : 'Delete'}
                     </Button>
                   ) : user?.role === 'admin' &&
                   <Button
                     disabled={deleteGalleryLoad === item._id}
                     onClick={() => deletePhoto(item._id)}
                     size="small"
-                    sx={{position:'absolute',top:350,right:10,color:'red',fontWeight:700}}
+                    sx={{position: 'absolute', top: 350, right: 10, color: 'red', fontWeight: 700}}
                   >
-                    {deleteGalleryLoad === item._id ? <CircularProgress /> : 'Delete'}
+                    {deleteGalleryLoad === item._id ? <CircularProgress/> : 'Delete'}
                   </Button>
               }
             </CardActions>

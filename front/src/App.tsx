@@ -5,6 +5,7 @@ import Register from './features/User/RegisterForm/RegisterForm.tsx';
 import Login from './features/User/LoginForm/LoginForm.tsx';
 import GalleryFullInfo from './features/Gallery/GalleryFullInfo/GalleryFullInfo.tsx';
 import AllGalleries from './features/Gallery/AllGalleries/AllGalleries.tsx';
+import AddImage from './features/Gallery/AddImage/AddImage.tsx';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Routes>
             <Route path={'/'} element={<AllGalleries/>} />
             <Route path={'/author-galleries/:id'} element={<GalleryFullInfo/>} />
+            <Route path={'/addImage'} element={<AddImage/>} />
             <Route path={'/register'} element={<Register />} />
             <Route path={'/login'} element={<Login />} />
             <Route path="*" element={<h1>Not Found</h1>} />
