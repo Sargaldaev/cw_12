@@ -1,7 +1,7 @@
 import express from 'express';
-import {imagesUpload} from '../multer';
+import { imagesUpload } from '../multer';
 import mongoose from 'mongoose';
-import auth, {RequestWithUser} from '../middleware/auth';
+import auth, { RequestWithUser } from '../middleware/auth';
 import Gallery from '../models/Gallery';
 import permit from '../middleware/permit';
 
@@ -26,18 +26,6 @@ galleriesRouter.post('/', auth, imagesUpload.single('image'), async (req, res, n
   }
 });
 
-galleriesRouter.get('/:id', async (req, res) => {
-  const _id = req.params.id;
-  try {
-      const gallery = await Gallery.find({_id});
-      return res.send(gallery);
-
-  } catch (e) {
-    res.send(e);
-  }
-});
-
-
 galleriesRouter.get('/', async (req, res) => {
   try {
     const {userId} = req.query;
@@ -57,8 +45,6 @@ galleriesRouter.get('/', async (req, res) => {
     return res.sendStatus(500);
   }
 });
-
-
 
 
 galleriesRouter.delete('/:id', auth, permit('admin', 'user'), async (req, res) => {

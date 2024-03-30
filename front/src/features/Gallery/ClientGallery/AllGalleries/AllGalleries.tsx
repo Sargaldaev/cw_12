@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../../app/store.ts';
+import { AppDispatch, RootState } from '../../../../app/store.ts';
 import { useEffect } from 'react';
-import { fetchData } from '../../../store/gallery/galleryThunk.ts';
-import { apiUrl } from '../../../constants.ts';
+import { fetchData } from '../../../../store/gallery/galleryThunk.ts';
+import { apiUrl } from '../../../../constants.ts';
 import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -11,8 +11,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import { Gallery } from '../../../types';
-import { changeModalItem, clearModalItem } from '../../../store/gallery/gallerySlice.ts';
+import { Gallery } from '../../../../types';
+import { changeModalItem, clearModalItem } from '../../../../store/gallery/gallerySlice.ts';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -23,11 +23,10 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 700,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
 };
 
 const AllGalleries = () => {
@@ -68,7 +67,7 @@ const AllGalleries = () => {
             <Box sx={style}>
               <CardMedia
                 component="img"
-                sx={{height: 350}}
+                sx={{height: 550,width:700}}
                 image={apiUrl + modalItem?.image}
               />
               <CloseIcon onClick={handleClose} sx={{position: 'absolute', top: -15, right: -15}}/>

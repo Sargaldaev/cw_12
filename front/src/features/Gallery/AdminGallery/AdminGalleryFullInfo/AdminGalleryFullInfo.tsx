@@ -1,19 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../../app/store.ts';
+import { AppDispatch, RootState } from '../../../../app/store.ts';
 import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
-import { apiUrl } from '../../../constants.ts';
+import { apiUrl } from '../../../../constants.ts';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { deleteGallery, galleryFullInfo } from '../../../store/gallery/galleryThunk.ts';
+import { deleteGallery, galleryFullInfo } from '../../../../store/gallery/galleryThunk.ts';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const GalleryFullInfo = () => {
+const AdminGalleryFullInfo = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const {id} = useParams() as { id: string };
@@ -24,11 +24,20 @@ const GalleryFullInfo = () => {
       dispatch(galleryFullInfo(id));
     }
 
-  }, [dispatch, id, navigate]);
+    if (!galleryFullInfo.length) {
+      console.log('nav1');
+      navigate('/');
+    }
+
+  }, [dispatch, id]);
 
   const deletePhoto = async (Id: string) => {
     await dispatch(deleteGallery(Id));
-    await dispatch(galleryFullInfo(Id));
+    if (!galleryFullInfo.length) {
+      console.log('nav2');
+      navigate('/');
+    }
+    await dispatch(galleryFullInfo(id));
   };
   return galleryInfoLoad ? (
     <CircularProgress sx={{marginTop: 20, marginLeft: 50}} color="secondary"/>
@@ -68,25 +77,15 @@ const GalleryFullInfo = () => {
             </CardContent>
             <CardActions>
               {
-                user?._id === item.user._id ?
-                  (
-                    <Button
-                      onClick={() => deletePhoto(item._id)}
-                      disabled={deleteGalleryLoad === item._id}
-                      size="small"
-                      sx={{position: 'absolute', top: 350, right: 10, color: 'red', fontWeight: 700}}
-                    >
-                      {deleteGalleryLoad === item._id ? <CircularProgress/> : 'Delete'}
-                    </Button>
-                  ) : user?.role === 'admin' &&
-                  <Button
-                    disabled={deleteGalleryLoad === item._id}
-                    onClick={() => deletePhoto(item._id)}
-                    size="small"
-                    sx={{position: 'absolute', top: 350, right: 10, color: 'red', fontWeight: 700}}
-                  >
-                    {deleteGalleryLoad === item._id ? <CircularProgress/> : 'Delete'}
-                  </Button>
+                user?.role === 'admin' &&
+                <Button
+                  disabled={deleteGalleryLoad === item._id}
+                  onClick={() => deletePhoto(item._id)}
+                  size="small"
+                  sx={{position: 'absolute', top: 350, right: 10, color: 'red', fontWeight: 700}}
+                >
+                  {deleteGalleryLoad === item._id ? <CircularProgress/> : 'Delete'}
+                </Button>
               }
             </CardActions>
           </Card>
@@ -97,4 +96,4 @@ const GalleryFullInfo = () => {
     ;
 };
 
-export default GalleryFullInfo;
+export default AdminGalleryFullInfo;

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
 import { Link, useNavigate } from 'react-router-dom';
-import InputFile from '../../../components/FileInput/FileInput.tsx';
+import InputFile from '../../../../components/FileInput/FileInput.tsx';
 import { Box, Button, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { GalleryCreate } from '../../../types';
-import { AppDispatch, RootState } from '../../../app/store.ts';
-import { addImage } from '../../../store/gallery/galleryThunk.ts';
+import { GalleryCreate } from '../../../../types';
+import { AppDispatch, RootState } from '../../../../app/store.ts';
+import { addImage } from '../../../../store/gallery/galleryThunk.ts';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 const AddImage = () => {
