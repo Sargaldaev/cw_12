@@ -7,6 +7,7 @@ import permit from '../middleware/permit';
 
 const galleriesRouter = express.Router();
 
+// hello
 galleriesRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
   const user = (req as RequestWithUser).user;
 
